@@ -1,33 +1,25 @@
 <?php
-include "dados.php";
-require_once "funcoes.php";
 
-if (!isset($_GET["id"])) die("ID não fornecido");
+include_once "dados.php";
 
-foreach ($personagens as $pessoa) {
-    if ($pessoa["id"] == $_GET["id"]) {
-        $personagem = $pessoa;
-        break;
-    }
+if (!isset($_GET["id"])) {
+    die("ID não fornecido");
 }
-if (!isset($personagem)) die("Personagem não encontrado");
 
+$personagem = buscar_personagem_por_id($_GET["id"], $personagens);
+
+if (!$personagem) {
+    die("Personagem não encontrado");
+}
 $tituloPagina = $personagem["nome"];
-include "auxiliares/cabecalho.php"; 
+include "index.php";
 ?>
-<h1 class="text-center mb-4"><?= $personagem["nome"] ?></h1>
-
-<div class="text-center mb-4">
-    <img src="<?= $personagem["imagem"] ?>" class="img-detalhe" alt="Imagem de <?= $personagem["nome"] ?>">
-</div>
-
-<div class="mb-4">
-    <p><strong>Ocupação:</strong> <?= $personagem["ocupacao"] ?></p>
-    <p><strong>Nascimento:</strong> <?= $personagem["nascimento"] ?></p>
-    <p><strong>Falecimento:</strong> <?= $personagem["falecimento"] ?></p>
-    <p><strong>Nacionalidade:</strong> <?= $personagem["nacionalidade"] ?></p>
-    <p><strong>Descrição:</strong> <?= $personagem["descricao"] ?></p>
-</div>
-
+<h1><?= $personagem['nome'] ?></h1>
+<img src="<?= $personagem['imagem'] ?>" class="img-fluid mb-3">
+<p><strong>Ocupação:</strong> <?= $personagem['ocupacao'] ?></p>
+<p><strong>Nascimento:</strong> <?= $personagem['nascimento'] ?></p>
+<p><strong>Falecimento:</strong> <?= $personagem['falecimento'] ?></p>
+<p><strong>Nacionalidade:</strong> <?= $personagem['nacionalidade'] ?></p>
+<p><?= $personagem['descricao'] ?></p>
 <a href="index.php" class="btn btn-secondary">Voltar</a>
 </div></body></html>
